@@ -7,3 +7,5 @@ yarn add react-icons
 yarn add polished
 
 yarn global add json-server
+
+yarn add axios
