@@ -1,76 +1,51 @@
-import React from 'react';
-import { MdAddShoppingCart}  from 'react-icons/md';
+import React, { Component } from 'react';
+import { MdAddShoppingCart } from 'react-icons/md';
+import { formatPrice } from '../../util/format';
+import api from '../../services/api';
 
 import { ProductList } from './styles';
 
-export default function Home() {
-  return (
-    <ProductList>
-      <li>
-        <img src="https://static.netshoes.com.br/produtos/tenis-olympikus-quest-unissex/06/D22-2777-006/D22-2777-006_detalhe1.jpg?resize=280:280" alt=""></img>
-        <strong>Tenis legal</strong>
-        <span>R$129,90</span>
+export default class Home extends Component {
+  state = {
+    products: []
+  };
 
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} colo="#fff/"/>3
-          </div>
+  async componentDidMount() {
+    const response = await api.get('products');
 
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-      <li>
-        <img src="https://static.netshoes.com.br/produtos/tenis-olympikus-quest-unissex/06/D22-2777-006/D22-2777-006_detalhe1.jpg?resize=280:280" alt=""></img>
-        <strong>Tenis legal</strong>
-        <span>R$129,90</span>
+    const data = response.data.map(product => ({
+      ...product,
+      priceFormatted: formatPrice(product.price)
+      /* Fazendo chamada da função fora do render, para que a função não seja 
+        chamada sempre que algo renderizar.
+      */
+    }));
 
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} colo="#fff"/>3
-          </div>
+    this.setState({ products: data });
 
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-      <li>
-        <img src="https://static.netshoes.com.br/produtos/tenis-olympikus-quest-unissex/06/D22-2777-006/D22-2777-006_detalhe1.jpg?resize=280:280" alt=""></img>
-        <strong>Tenis legal</strong>
-        <span>R$129,90</span>
+  }
 
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} colo="#fff"/>3
-          </div>
+  render() {
+    const { products } = this.state;
 
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-      <li>
-        <img src="https://static.netshoes.com.br/produtos/tenis-olympikus-quest-unissex/06/D22-2777-006/D22-2777-006_detalhe1.jpg?resize=280:280" alt=""></img>
-        <strong>Tenis legal</strong>
-        <span>R$129,90</span>
+    return (
+      <ProductList>
+        {products.map(product => (
+          <li key={product.id}>
+            <img src={product.image} alt={product.title}></img>
+            <strong>{product.title}</strong>
+            <span>{product.priceFormatted}</span>
 
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} colo="#fff"/>3
-          </div>
+            <button type="button">
+              <div>
+                <MdAddShoppingCart size={16} colo="#fff/" />3
+            </div>
 
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-      <li>
-        <img src="https://static.netshoes.com.br/produtos/tenis-olympikus-quest-unissex/06/D22-2777-006/D22-2777-006_detalhe1.jpg?resize=280:280" alt=""></img>
-        <strong>Tenis legal</strong>
-        <span>R$129,90</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} colo="#fff"/>3
-          </div>
-
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-    </ProductList>
-  );
+              <span>ADICIONAR AO CARRINHO</span>
+            </button>
+          </li>
+        ))}
+      </ProductList>
+    );
+  }
 }

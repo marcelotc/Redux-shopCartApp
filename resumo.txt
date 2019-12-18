@@ -6,6 +6,7 @@ yarn add react-icons
 
 yarn add polished
 
-yarn global add json-server
+yarn global add json-server <---- assim da ruim, ver no site a instalação
+por npm e se der conflito npm e yarn deletar arquivo yarn.lock rodar yarn install
 
 yarn add axios
