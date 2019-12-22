@@ -1,10 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { MdRemoveCircle, MdAddCircleOutline, MdDelete } from 'react-icons/md';
+
+import * as CartACtions from '../Cart/actions';
 
 import { Container, ProductTable, Total } from './styles';
 
-function Cart({ cart, dispatch }) {
+function Cart({ cart, removeFromCart }) {
   return (
     <Container>
       <ProductTable>
@@ -43,7 +46,7 @@ function Cart({ cart, dispatch }) {
               </td>
               <td>
                 <button type="button" onClick={() =>
-                  dispatch({ type: 'REMOVE_FROM_CART', id: product.id })}>
+                  removeFromCart(product.id)}>
                   <MdDelete size={20} color="#7159c1"></MdDelete>
                 </button>
               </td>
@@ -64,8 +67,12 @@ function Cart({ cart, dispatch }) {
   );
 }
 
+//Converte pedaços do estado/reducers da aplicação em propriedades dentro do componente
 const mapStateToProps = state => ({
   cart: state.cart
 });
 
-export default connect(mapStateToProps)(Cart);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CartACtions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

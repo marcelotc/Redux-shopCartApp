@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { MdAddShoppingCart } from 'react-icons/md';
 import { formatPrice } from '../../util/format';
 import api from '../../services/api';
+
+import * as CartActions from '../Cart/actions';
 
 import { ProductList } from './styles';
 
@@ -27,12 +30,9 @@ class Home extends Component {
   }
 
   handleAddProduct = product => {
-    const { dispatch } = this.props;
+    const { addToCart } = this.props;
 
-    dispatch({
-      type: 'ADD_TO_CART',
-      product 
-    })
+    addToCart(product);
   };
 
   render() {
@@ -60,4 +60,8 @@ class Home extends Component {
   }
 }
 
-export default connect()(Home);
+//Converte pedaços do actions da aplicação em propriedades dentro do componente
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CartActions, dispatch);
+
+export default connect(null, mapDispatchToProps)(Home);
