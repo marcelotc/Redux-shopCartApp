@@ -5,7 +5,7 @@ import { MdRemoveCircle, MdAddCircleOutline, MdDelete } from 'react-icons/md';
 
 import { formatPrice } from '../../util/format';
 
-import * as CartACtions from '../Cart/actions';
+import * as CartActions from '../../store/modules/cart/actions';
 
 import { Container, ProductTable, Total } from './styles';
 
@@ -89,6 +89,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(CartACtions, dispatch);
+  bindActionCreators(CartActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
