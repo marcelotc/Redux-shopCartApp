@@ -2,6 +2,8 @@ import { call, select, put, all, takeLatest } from 'redux-saga/effects';
 //call é tipo um api.get do axios
 //put é tipo um dispatch
 
+import { toast } from 'react-toastify';
+
 import api from '../../../services/api';
 import { formatPrice } from '../../../util/format';
 
@@ -20,7 +22,7 @@ function* addToCart({ id }) {
     const amount = currenAmount + 1;
 
     if(amount > stockAmount){
-        console.tron.console.warn('Erro');
+        toast.error('Quantidade solicitada fora de estoque')
         return;
     }
 
