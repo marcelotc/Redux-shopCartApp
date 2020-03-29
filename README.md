@@ -1,4 +1,4 @@
-# Rocketseat-Bootcamp-arquitetura-flux
+# Redux-shopCartApp
 
 ```
 yarn start
